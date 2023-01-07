@@ -1,7 +1,7 @@
 
 ###### データ準備
-env_data <- read.csv("C:/Users/anchor200/Desktop/202301_ws/data/terrestrial_environment_grid10km.csv")
-
+env_data <- fread("C:/Users/anchor200/Desktop/202301_ws/data/terrestrial_environment_grid10km.csv")
+env_data <- data.frame(env_data)
 tempdf <- data.frame("name"=NA, "isContinuousLikely"=NA)[-1,]
 for (ii in 5:ncol(env_data)){
     tempdf <- rbind(tempdf, data.frame("name"=colnames(env_data)[ii], "isContinuousLikely"=(length(unique(env_data[,c(ii)]))/length(env_data[,c(ii)]) > 0.3)))
@@ -10,7 +10,6 @@ tempdf[tempdf$isContinuousLikely==FALSE,]
 # 値のバリエーションが少ない変数は、カテゴリカル変数かも
 
 table(env_data$beach_2014)
-
 
 
 # 環境データのラスター化

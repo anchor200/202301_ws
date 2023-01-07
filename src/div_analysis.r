@@ -161,7 +161,40 @@ regr_df$land.area.log <- log10(tdata_t$land.area)
 regr_df <- as.data.frame(scale(regr_df ))
 head(regr_df)
 
+
+# 種数を説明変数の候補に対してプロット
 # pairs(regr_df , panel = panel.smooth)
+
+expv <- colnames(regr_df)
+expv <- expv[expv!="dummytaxon"]
+
+png("C:/Users/anchor200/Desktop/202301_ws/output/sr_exp_1.png", width = 800, height = 400)
+par(mfrow = c(3, 6))
+for(exp in expv[1:18]){
+	plot(regr_df[, exp], regr_df$dummytaxon, xlab=exp, ylab="species richness", col=rgb(0.1,0.1,0.1, alpha=0.1))
+}
+dev.off()
+
+png("C:/Users/anchor200/Desktop/202301_ws/output/sr_exp_2.png", width = 800, height = 400)
+par(mfrow = c(3, 6))
+for(exp in expv[19:36]){
+	plot(regr_df[, exp], regr_df$dummytaxon, xlab=exp, ylab="species richness", col=rgb(0.1,0.1,0.1, alpha=0.1))
+}
+dev.off()
+
+png("C:/Users/anchor200/Desktop/202301_ws/output/sr_exp_3.png", width = 800, height = 400)
+par(mfrow = c(3, 6))
+for(exp in expv[37:54]){
+	plot(regr_df[, exp], regr_df$dummytaxon, xlab=exp, ylab="species richness", col=rgb(0.1,0.1,0.1, alpha=0.1))
+}
+dev.off()
+
+png("C:/Users/anchor200/Desktop/202301_ws/output/sr_exp_4.png", width = 800, height = 400)
+par(mfrow = c(3, 6))
+for(exp in expv[54:67]){
+	plot(regr_df[, exp], regr_df$dummytaxon, xlab=exp, ylab="species richness", col=rgb(0.1,0.1,0.1, alpha=0.1))
+}
+dev.off()
 
 
 # 気候モデル
@@ -230,3 +263,5 @@ ggplot(aes(y=irreplaceability, x=sdm_richness, color=y)) + geom_point() + stat_s
 scale_color_gradientn(colors = latpal,
                           breaks=seq(20,45, by=5),
                           limits=c(20, 45), name="Latitude")+xlab("sdm richness")+ylab("irreplaceability") + theme_bw()
+
+

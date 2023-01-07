@@ -3,6 +3,7 @@
 library(stringr)
 library(dplyr)
 library(reshape2)
+library(data.table)
 
 #データ可視化ライブラリ
 library(ggplot2)
