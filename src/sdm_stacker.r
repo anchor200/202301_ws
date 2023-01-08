@@ -17,7 +17,7 @@ for (ii in 1:length(sp_list)){
     }
     
     colnames(data_temp) <- c("x", "y")
-    bg_temp <-sample_n(tbl = env_data[, c(2,3)], size = 1000)
+    bg_temp <-sample_n(tbl = env_data[, c(2,3)], size = 4000)
     colnames(bg_temp) <- c("x", "y")
     data <- prepareSWD(species = taxon, p = data_temp, a = bg_temp,env = xy2)
 

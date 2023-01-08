@@ -198,7 +198,7 @@ dev.off()
 
 
 # 気候モデル
-clim <- lm(dummytaxon ~ land.area.log  + bio_1 +  bio_4 + bio_12 + bio_15 + I(bio_1^2) +I(bio_1^12) + elevation^2, data=regr_df)
+clim <- lm(dummytaxon ~ land.area.log  + bio_1 +  bio_4 + bio_12 + bio_15 + I(bio_1^2) +I(bio_12^2) + elevation^2, data=regr_df)
 clim_coefs <- as.data.frame(summary(clim)$coefficients)
 
 clim_coefs$val <- c("Intercept", "land area (log)", "annual temp", "temp seasonality", "annual prec", "prec seasonality", "temp^2", "prec^2", "elevation")
@@ -233,11 +233,10 @@ mutate("variables"=rownames(partialR2)) %>%
 ggplot(aes(x=variables, y=partial_R2)) + geom_bar(stat="identity") + theme_bw() 
 
 ## 興味のある変数だけ
-partialR2 %>%
+temp_r2 <- partialR2 %>%
 mutate("variables"=rownames(partialR2)) %>%
 filter(variables!="(Intercept)" & variables!="land.area.log") %>%
 ggplot(aes(x=variables, y=partial_R2)) + geom_bar(stat="identity") + theme_bw() 
-
 
 ###### かけがえのなさ度（仮）
 sdm <- SDM_stack$sdm

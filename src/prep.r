@@ -26,6 +26,7 @@ library(plotROC)
 # 分析用ライブラリ
 library(car)
 library(sensemakr)
+library(vegan)
 
 # 緯度経度とメッシュコードの変換
 ## メッシュコード: https://www.stat.go.jp/data/mesh/m_itiran.html

@@ -1,7 +1,7 @@
 
 ###### データ準備
-env_data <- fread("C:/Users/anchor200/Desktop/202301_ws/data/terrestrial_environment_grid10km.csv")
-env_data <- data.frame(env_data)
+env_data <- read.csv("C:/Users/anchor200/Desktop/202301_ws/data/terrestrial_environment_grid10km.csv")
+#env_data <- data.frame(env_data)
 tempdf <- data.frame("name"=NA, "isContinuousLikely"=NA)[-1,]
 for (ii in 5:ncol(env_data)){
     tempdf <- rbind(tempdf, data.frame("name"=colnames(env_data)[ii], "isContinuousLikely"=(length(unique(env_data[,c(ii)]))/length(env_data[,c(ii)]) > 0.3)))
@@ -51,7 +51,7 @@ sps_list <- unique(OCC_DATA$species)
 data_use <-  OCC_DATA[, c("species", "longitude", "latitude", "mesh2")]
 
 # 一種だけ抽出
-taxon <- "sp59"
+taxon <- "sp1"
 data_xy <- subset(data_use, data_use$species==taxon)
 data_xy <- data_xy[!duplicated(data_xy$mesh2), c(2,3)]
 colnames(data_xy) <- c("x", "y")
@@ -63,12 +63,12 @@ plot(y ~ x, data=data_xy, col = "orange", xlim=c(120,150), ylim=c(22,47), pch = 
 
 
 ###### MaxEnt実行
-bg_xy <-sample_n(tbl = env_data[, c(2,3)], size = 1000)
+bg_xy <-sample_n(tbl = env_data[, c(2,3)], size = 4000)
 colnames(bg_xy) <- c("x", "y")
 data <- prepareSWD(species = taxon, p = data_xy, a = bg_xy, env = xy2)
 
 # 分布モデルの学習
-model <- train(method = "Maxent", data = data, iter=1000)
+model <- train(method = "Maxent", data = data, iter=500)
 
 # 学習データ点での生息適度予測値を計算
 pred <- predict(model, data = data, type = "cloglog")
@@ -81,7 +81,7 @@ names(map) <- taxon
 plot(map, col=colorRampPalette(pal_bin)(50))
 title(paste(taxon, "habitat suitability"))
 
-# スキル統計量最大化による閾値選択
+# 「感度＋特異度最大」による閾値選択
 ths <- thresholds(model, type = "cloglog")[3,2]
 
 binary_map <- map
